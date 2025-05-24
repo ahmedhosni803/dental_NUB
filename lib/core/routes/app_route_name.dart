@@ -1,0 +1,33 @@
+class AppRouteName {
+  static const String splash = '/';
+  static const String onboarding1 = '/onboarding1';
+  static const String onboarding2 = '/onboarding2';
+  static const String welcome = '/welcome';
+  static const String login = '/login';
+  static const String chooseRole = '/choose_role';
+  static const String signUp = '/sign_up';
+  static const String forgotPassword = '/forgot_password';
+  static const String checkEmail = '/check_email';
+  static const String resetPassword = '/reset_password';
+  static const String passwordSuccess = '/password_success';
+  static const String choosePatient = '/choose_patient';
+  static const String registration = '/registration';
+  static const String uploadXray = '/upload_xray';
+  static const String healthHistory = '/health_history';
+  static const String appointmentConfirmation = '/appointment_confirmation';
+  static const String chat = '/chat';
+  static const String settings = '/settings';
+  static const String chooseForDoctor = '/choose_for_doctor';
+  static const String patientListView = '/patient_list_view';
+  static const String diagnoseOne = '/diagnose_one';
+  static const String homeStu = '/home_stu';
+  static const String myPatientList = '/my_patient_list';
+  static const String communityStore = '/community_store';
+  static const String communityFree = '/community_free';
+  static const String addTools = '/add_tools';
+  static const String productDetails = '/product_details';
+  static const String contact = '/contact';
+  static const String communityGroups = '/community_groups';
+  static const String aboutUs = '/about_us';
+  static const String completedCases = '/completed_cases';
+}
