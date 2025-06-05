@@ -36,8 +36,8 @@ class NetworkService {
           return handler.next(options);
         },
         onResponse: (response, handler) async {
-          if(response.data!= null){
-            if (response.data["token"] != null) {
+          if(response.data!= null && response.data is Map<String, dynamic>){
+            if (response.data.containsKey("token") && response.data["token"] != null) {
               _token = response.data["token"];
               _dio.options.headers["Authorization"] = "Bearer $_token";
               var prefs = await SharedPreferences.getInstance();

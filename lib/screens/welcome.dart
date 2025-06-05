@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'choose_role.dart';
+import 'package:animate_do/animate_do.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Spacer(flex: 1),
-            Image.asset('assets/images/logo.png', height: 100),
+            ZoomIn(child: Image.asset('assets/images/logo.png', height: 100)),
             SizedBox(height: 10), 
             Text(
               "Hello!\nWelcome to DentalNUB!",
@@ -29,43 +30,47 @@ class WelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChooseRoleScreen()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Color(0xFF0B4F8A),
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
+                    child: FadeInLeft(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChooseRoleScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Color(0xFF0B4F8A),
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                        ),
+                        child: Text("Sign up",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
-                      child: Text("Sign up",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
                   SizedBox(width: 20),
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/login');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Color(0xFF0B4F8A),
-                        side: BorderSide(color: Colors.white, width: 2),
-                        padding: EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
+                    child: FadeInRight(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Color(0xFF0B4F8A),
+                          side: BorderSide(color: Colors.white, width: 2),
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                        ),
+                        child: Text("Login",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
-                      child: Text("Login",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],

@@ -4,10 +4,9 @@ import '../manager/auth/auth_provider.dart';
 import 'welcome.dart';
 import 'choose_for_patient.dart';
 import 'admin_screen.dart'; // هنضيف الملف ده بعدين
+import 'package:animate_do/animate_do.dart';
 
 class LoginScreen extends StatelessWidget {
-
-
   // Mock credentials للـ Admin
   final String adminEmail = "admin@example.com";
   final String adminPassword = "admin123";
@@ -18,98 +17,108 @@ class LoginScreen extends StatelessWidget {
       create: (context) => AuthProvider(),
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 253, 253, 253),
-        body: Consumer<AuthProvider>(
-          builder: (context, provider, child) {
-            return Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 40),
-                      Image.asset('assets/images/pana.png', height: 150),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "Welcome Back!",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        "Login ",
-                        style: TextStyle(fontSize: 24, color: Color(0xFF1F5382)),
-                      ),
-                      const SizedBox(height: 20),
+        body: Consumer<AuthProvider>(builder: (context, provider, child) {
+          return Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 40),
+                    ZoomIn(
+                        child:
+                            Image.asset('assets/images/pana.png', height: 200)),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Welcome Back!",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "Login ",
+                      style: TextStyle(fontSize: 24, color: Color(0xFF1F5382)),
+                    ),
+                    const SizedBox(height: 20),
 
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Email",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF1F5382),
-                            fontWeight: FontWeight.bold,
-                          ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Email",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF1F5382),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      TextField(
+                    ),
+                    const SizedBox(height: 8),
+                    FadeInRight(
+                      child: TextField(
                         controller: provider.emailController,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.email, color: Color(0xFF1F5382)),
+                          prefixIcon:
+                              Icon(Icons.email, color: Color(0xFF1F5382)),
                           hintText: "Enter Your Email Address",
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           filled: true,
                           fillColor: Color.fromARGB(255, 248, 248, 248),
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      // نص "Password" فوق الحقل
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Password",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF1F5382),
-                            fontWeight: FontWeight.bold,
-                          ),
+                    ),
+                    const SizedBox(height: 12),
+                    // نص "Password" فوق الحقل
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Password",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF1F5382),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      TextField(
+                    ),
+                    const SizedBox(height: 8),
+                    FadeInRight(
+                      child: TextField(
                         controller: provider.passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.lock, color: Color(0xFF1F5382)),
+                          prefixIcon:
+                              Icon(Icons.lock, color: Color(0xFF1F5382)),
                           hintText: "Enter Your Password",
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           filled: true,
                           fillColor: Color.fromARGB(255, 252, 252, 252),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                    ),
+                    const SizedBox(height: 8),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/forgot_password');
-                          },
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(color: Color(0xFF1F5382)),
-                          ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/forgot_password');
+                        },
+                        child: const Text(
+                          "Forgot Password?",
+                          style: TextStyle(color: Color(0xFF1F5382)),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      SizedBox(
+                    ),
+                    const SizedBox(height: 20),
+                    FadeInUpBig(
+                      child: SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
@@ -118,12 +127,14 @@ class LoginScreen extends StatelessWidget {
                                 provider.passwordController.text.isNotEmpty) {
                               // التحقق من بيانات الـ Admin
                               if (provider.emailController.text == adminEmail &&
-                                  provider.passwordController.text == adminPassword) {
+                                  provider.passwordController.text ==
+                                      adminPassword) {
                                 // لو Admin، يروح لشاشة الـ Admin
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const AdminScreen()),
+                                      builder: (context) =>
+                                          const AdminScreen()),
                                 );
                               } else {
                                 provider.login();
@@ -131,7 +142,8 @@ class LoginScreen extends StatelessWidget {
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text("Please enter email and password"),
+                                  content:
+                                      Text("Please enter email and password"),
                                 ),
                               );
                             }
@@ -149,46 +161,46 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Don't have an account?",
-                              style: TextStyle(color: Color(0xFF1F5382))),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/choose_role');
-                            },
-                            child: const Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                  color: Color(0xFF1F5382),
-                                  fontWeight: FontWeight.bold),
-                            ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Don't have an account?",
+                            style: TextStyle(color: Color(0xFF1F5382))),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/choose_role');
+                          },
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                                color: Color(0xFF1F5382),
+                                fontWeight: FontWeight.bold),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                Positioned(
-                  top: 20,
-                  left: 10,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back,
-                        color: Color(0xFF1F5382), size: 30),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                      );
-                    },
-                  ),
+              ),
+              Positioned(
+                top: 20,
+                left: 10,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back,
+                      color: Color(0xFF1F5382), size: 30),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    );
+                  },
                 ),
-              ],
-            );
-          }
-        ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

@@ -27,14 +27,14 @@ sealed class ApiResponse<T> {
   /// Generic method to execute an API call
   static Future<ApiResponse<T>> executeApiCall<T>(
     Future<Response<dynamic>> Function() apiCall,
-    T Function(Map<String, dynamic> json) fromJson, {
-    bool? Function(Map<String, dynamic> json)? checkSuccess,
+    T Function(dynamic json) fromJson, {
+    bool? Function(dynamic json)? checkSuccess,
   }) async {
     bool checkSuccessFlag = true;
     try {
       final response = await apiCall();
       final data = response.data;
-      final json = (data is Map<String, dynamic>) ? data : null;
+      final json = data;
 
       if (response.statusCode! >= 300) {
         return ApiError(

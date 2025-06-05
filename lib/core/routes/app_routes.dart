@@ -1,6 +1,9 @@
 import 'package:buisness_test/data/appointment/models/appointment_model.dart';
+import 'package:buisness_test/screens/diagnosis_screen.dart';
+import 'package:buisness_test/screens/otp_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/appointment/models/all_appointments.dart';
 import '../../manager/appointment/appointment_provider.dart';
 import '../../screens/About_us.dart';
 import '../../screens/add_tools_screen.dart';
@@ -54,7 +57,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case AppRouteName.chooseRole:
       return MaterialPageRoute(builder: (_) => ChooseRoleScreen());
     case AppRouteName.signUp:
-      return MaterialPageRoute(builder: (_) => SignUpScreen());
+      return MaterialPageRoute(builder: (_) => SignUpScreen(),settings: settings);
     case AppRouteName.forgotPassword:
       return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
     case AppRouteName.checkEmail:
@@ -111,7 +114,21 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case AppRouteName.patientListView:
       return MaterialPageRoute(builder: (_) => PatientListScreen());
     case AppRouteName.diagnoseOne:
-      return MaterialPageRoute(builder: (_) => DiagnoseOneScreen());
+      var provider = (settings.arguments as Map)["provider"] as AppointmentProvider;
+      var patient = (settings.arguments as Map)["patient"] as PatientRecord;
+
+      return MaterialPageRoute(builder: (_) => DiagnoseOneScreen(
+        provider: provider,
+        patient: patient
+      ));
+      case AppRouteName.diagnoseTwo:
+      var provider = (settings.arguments as Map)["provider"] as AppointmentProvider;
+      var patient = (settings.arguments as Map)["patient"] as PatientRecord;
+
+      return MaterialPageRoute(builder: (_) => DiagnosisTwoScreen(
+        provider: provider,
+        patient: patient
+      ));
     case AppRouteName.homeStu:
       return MaterialPageRoute(builder: (_) => HomeScreen());
     case AppRouteName.myPatientList:
@@ -120,6 +137,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => CommunityStore());
     case AppRouteName.communityFree:
       return MaterialPageRoute(builder: (_) => CommunityFreeScreen());
+      case AppRouteName.otp:
+      return MaterialPageRoute(builder: (_) => OtpScreen());
     case AppRouteName.addTools:
       return MaterialPageRoute(
         builder: (_) => AddToolsScreen(

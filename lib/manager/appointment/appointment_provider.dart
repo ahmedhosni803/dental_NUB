@@ -7,6 +7,7 @@ import 'package:buisness_test/data/appointment/apis/apis.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../data/appointment/models/all_appointments.dart';
 import '../../data/appointment/models/appointment_data.dart';
 import '../../main.dart';
 
@@ -19,7 +20,7 @@ class AppointmentProvider extends ChangeNotifier {
   TextEditingController nationalIdController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-
+  List<PatientRecord> appointments = []; // List to store patient records>
   // Other fields
   String gender = '';
   String complaint = '';
@@ -82,16 +83,24 @@ class AppointmentProvider extends ChangeNotifier {
     var response = await api.bookAppointment(data);
     response.when(success: (data) {
       Loading.hide();
-      Navigator.pushReplacementNamed(
-        navigationKey.currentState!.context,
-        AppRouteName.appointmentConfirmation,
-        arguments: data
-      );
+      Navigator.pushReplacementNamed(navigationKey.currentState!.context,
+          AppRouteName.appointmentConfirmation,
+          arguments: data);
       CustomToast.showSuccessToast("Appointment Booked Successfully");
     }, error: (message, statusCode) {
       print(message);
       Loading.hide();
     });
+  }
+
+  Future<void> getAppointments() async {
+    var response = await api.getAppointments();
+    response.when(
+        success: (data) {
+          appointments = data;
+          notifyListeners();
+        },
+        error: (message, statusCode) {});
   }
 
   // Dispose controllers to prevent memory leaks

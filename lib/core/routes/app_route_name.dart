@@ -20,6 +20,7 @@ class AppRouteName {
   static const String chooseForDoctor = '/choose_for_doctor';
   static const String patientListView = '/patient_list_view';
   static const String diagnoseOne = '/diagnose_one';
+  static const String diagnoseTwo = '/diagnose_two';
   static const String homeStu = '/home_stu';
   static const String myPatientList = '/my_patient_list';
   static const String communityStore = '/community_store';
@@ -30,4 +31,5 @@ class AppRouteName {
   static const String communityGroups = '/community_groups';
   static const String aboutUs = '/about_us';
   static const String completedCases = '/completed_cases';
+  static const String otp = '/otp';
 }

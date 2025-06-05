@@ -1,7 +1,12 @@
+import 'package:buisness_test/core/routes/app_route_name.dart';
+import 'package:buisness_test/data/appointment/models/all_appointments.dart';
+import 'package:buisness_test/manager/appointment/appointment_provider.dart';
 import 'package:flutter/material.dart';
 
 class DiagnoseOneScreen extends StatefulWidget {
-  const DiagnoseOneScreen({super.key});
+  final AppointmentProvider provider;
+  final PatientRecord patient;
+  const DiagnoseOneScreen({super.key ,required this.provider, required this.patient});
 
   @override
   State<DiagnoseOneScreen> createState() => _DiagnoseOneScreenState();
@@ -16,6 +21,16 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
   int timesDay = 2;
   int cigarettesPerDay = 0;
   List<String> patientDisease = ['Liver disease'];
+  @override
+  void initState() {
+    gender = widget.patient.gender!;
+    smoke = widget.patient.cigarettesPerDay == 0 ? 'No' : 'Yes';
+    brushTeeth = widget.patient.teethBrushingFrequency == 0 ? 'No' : 'Yes';
+    timesDay = widget.patient.teethBrushingFrequency!;
+    cigarettesPerDay = widget.patient.cigarettesPerDay!;
+    patientDisease = widget.patient.chronicalDiseases!;
+    super.initState();
+  }
 
   List<String> complaints = [
     'Tooth decay',
@@ -65,15 +80,15 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildLabeledTextField('Name', 'Nagwa Ahmed Zaki',
+            _buildLabeledTextField('Name',widget.patient.patientName??"",
+                isRequired: true,),
+            const SizedBox(height: 20),
+            _buildLabeledTextField('Phone', widget.patient.patPhone??"", isRequired: true),
+            const SizedBox(height: 20),
+            _buildLabeledTextField('National ID Number', widget.patient.nationalID??"",
                 isRequired: true),
             const SizedBox(height: 20),
-            _buildLabeledTextField('Phone', '01113829537', isRequired: true),
-            const SizedBox(height: 20),
-            _buildLabeledTextField('National ID Number', '3030329220072',
-                isRequired: true),
-            const SizedBox(height: 20),
-            _buildLabeledTextField('Age', '23', isRequired: true),
+            _buildLabeledTextField('Age', widget.patient.age.toString(), isRequired: true),
             const SizedBox(height: 20),
             _buildLabeledTextField('Adress', 'Enter Your Adress'),
             const SizedBox(height: 20),
@@ -171,7 +186,12 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
             ),
             const SizedBox(height: 20),
             _buildButton('Diagnose two', customBlue, () {
-              Navigator.pushNamed(context, '/diagnose_two');
+              Navigator.pushNamed(context, AppRouteName.diagnoseTwo,
+              arguments: {
+                "patient": widget.patient,
+                "provider": widget.provider
+              }
+              );
             }),
           ],
         ),

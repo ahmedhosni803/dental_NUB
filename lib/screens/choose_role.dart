@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/routes/app_route_name.dart';
+
 class ChooseRoleScreen extends StatelessWidget {
   const ChooseRoleScreen({super.key});
 
@@ -69,7 +71,7 @@ class ChooseRoleScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(
               context,
-              '/sign_up',
+              AppRouteName.signUp,
               arguments: {'role': role},
             );
           },

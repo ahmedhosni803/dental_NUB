@@ -106,6 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    print(role);
                                     if (provider.passwordController.text != provider.confirmPasswordController.text) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text("Passwords do not match")),

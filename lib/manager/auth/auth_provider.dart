@@ -29,18 +29,37 @@ class AuthProvider extends ChangeNotifier {
         confirmPassword: confirmPasswordController.text,
         role: role);
     var response = await authApis.signIn(data);
-    response.when(
-        success: (data) {
-          Navigator.pushNamedAndRemoveUntil(
-            navigationKey.currentContext!,
-            AppRouteName.login,
-            (route) => false,
-          );
-          CustomToast.showSuccessToast("Sign Up Success");
+    response.when(success: (data) {
+      Loading.hide();
 
-        },
-        error: (message, statusCode) {});
-    Loading.hide();
+      Navigator.pushNamed(
+        navigationKey.currentContext!,
+        AppRouteName.otp,
+      );
+      CustomToast.showSuccessToast("Sign Up Success");
+    }, error: (message, statusCode) {
+      Loading.hide();
+    });
+  }
+
+  Future<void> otp(String code) async {
+    Loading.show();
+    var result = await authApis.otp(code);
+    result.when(
+      success: (data) {
+        Loading.hide();
+        Navigator.pushNamedAndRemoveUntil(
+          navigationKey.currentState!.context,
+          AppRouteName.login,
+          (route) => false,
+        );
+        CustomToast.showSuccessToast("OTP Success");
+      },
+      error: (message, statusCode) {
+        Loading.hide();
+        CustomToast.showErrorToast(message);
+      },
+    );
   }
 
   Future<void> login() async {
@@ -50,40 +69,39 @@ class AuthProvider extends ChangeNotifier {
       password: passwordController.text,
     );
     var response = await authApis.login(data);
-    response.when(
-        success: (data) {
-          Loading.hide();
+    response.when(success: (data) {
+      Loading.hide();
 
-          if (data.role == 'Patient') {
-            Navigator.pushReplacementNamed(navigationKey.currentState!.context,
-                AppRouteName.choosePatient,
-                arguments: {
-                  "name": data.fullName,
-                  "role": data.role,
-                });
-          } else if (data.role == 'Doctor') {
-            Navigator.pushNamedAndRemoveUntil(navigationKey.currentState!.context,
-                AppRouteName.chooseForDoctor, (route) => false,
-                arguments: {
-                  "name": data.fullName,
-                  "role": data.role,
-                });
-          } else {
-            Navigator.pushNamedAndRemoveUntil(navigationKey.currentState!.context,
-                AppRouteName.welcome, (route) => false,
-                arguments: {
-                  "name": data.fullName,
-                  "role": data.role,
-                });
-          }
+      if (data.role == 'Patient') {
+        Navigator.pushReplacementNamed(
+            navigationKey.currentState!.context, AppRouteName.choosePatient,
+            arguments: {
+              "name": data.fullName,
+              "role": data.role,
+            });
+      } else if (data.role == 'Doctor') {
+        Navigator.pushNamedAndRemoveUntil(
+          navigationKey.currentState!.context,
+          AppRouteName.homeStu, (route) => false,
+          // arguments: {
+          //   "name": data.fullName,
+          //   "role": data.role,
+          // }
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(navigationKey.currentState!.context,
+            AppRouteName.chooseForDoctor, (route) => false,
+            arguments: {
+              "name": data.fullName,
+              "role": data.role,
+            });
+      }
 
-          CustomToast.showSuccessToast("Login Success");
-
-        },
-        error: (message, statusCode) {
-          Loading.hide();
-
-        });
+      CustomToast.showSuccessToast("Login Success");
+    }, error: (message, statusCode) {
+      CustomToast.showErrorToast("Email or Password is incorrect");
+      Loading.hide();
+    });
   }
 }
 

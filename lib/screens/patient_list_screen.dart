@@ -1,4 +1,6 @@
+import 'package:buisness_test/manager/doctor/doctor_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'case_details.dart';
 
@@ -29,7 +31,11 @@ class _MyPatientListScreenState extends State<MyPatientListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ChangeNotifierProvider(
+  create: (BuildContext context) => DoctorProvider()..getAllCases(),
+  child: Consumer<DoctorProvider>(
+  builder: (context, provider, child) {
+  return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
@@ -73,7 +79,7 @@ class _MyPatientListScreenState extends State<MyPatientListScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => PatientDetailsScreen(
-                            patient: patients[index],
+                            patient: provider.cases[index],
                           ),
                         ),
                       );
@@ -104,7 +110,7 @@ class _MyPatientListScreenState extends State<MyPatientListScreen> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              patients[index],
+                              provider.cases[index].patientName??"",
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -137,7 +143,7 @@ class _MyPatientListScreenState extends State<MyPatientListScreen> {
                   ),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 35),
-                  itemCount: patients.length,
+                  itemCount: provider.cases.length,
                 ),
               ),
             ],
@@ -145,5 +151,8 @@ class _MyPatientListScreenState extends State<MyPatientListScreen> {
         ),
       ),
     );
+  },
+),
+);
   }
 }

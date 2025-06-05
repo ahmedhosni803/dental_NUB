@@ -1,9 +1,11 @@
+import 'package:buisness_test/data/doctor/models/productResponse.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'community_store.dart'; // استيراد شاشة CommunityStore
 
 class ContactUSScreen extends StatelessWidget {
+  Product? product;
   final TextEditingController idController =
       TextEditingController(text: "1000");
   final TextEditingController nameController =
@@ -11,24 +13,29 @@ class ContactUSScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
 
   // شيلنا 'const' من الـ constructor
-  ContactUSScreen({super.key});
+  ContactUSScreen({super.key,  this.product});
 
   @override
   Widget build(BuildContext context) {
+    if(product != null){
+      idController.text = product?.price?.toString()??"Free";
+      nameController.text = product!.doctorName.toString();
+      phoneController.text = product!.toolPostID.toString();
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF376D9F)),
-          onPressed: () {
-            // الرجوع إلى شاشة CommunityStore
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const CommunityStore()),
-              (route) => false, // إزالة كل الشاشات السابقة
-            );
-          },
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF376D9F)),
+        //   // onPressed: () {
+        //   //   // الرجوع إلى شاشة CommunityStore
+        //   //   Navigator.pushAndRemoveUntil(
+        //   //     context,
+        //   //     MaterialPageRoute(builder: (context) => const CommunityStore()),
+        //   //     (route) => false, // إزالة كل الشاشات السابقة
+        //   //   );
+        //   // },
+        // ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),

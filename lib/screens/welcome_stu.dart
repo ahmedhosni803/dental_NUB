@@ -1,4 +1,8 @@
+import 'package:buisness_test/core/services/custom_toast.dart';
+import 'package:buisness_test/data/clinics/models/add_clinic_data.dart';
+import 'package:buisness_test/manager/clinics/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeDoctorScreen extends StatefulWidget {
   final String userName;
@@ -31,99 +35,106 @@ class _WelcomeDoctorScreenState extends State<WelcomeDoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Color(0xFF1F5382),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Welcome Doctor !',
-          style: TextStyle(
-            color: Color(0xFF1F5382),
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            buildInputField(
-              label: 'Clinic',
-              hint: 'Enter Your Clinic',
-              icon: Icons.local_hospital,
-              controller: clinicController,
-            ),
-            const SizedBox(height: 15),
-            buildInputField(
-              label: 'ID',
-              hint: 'Enter Your ID Number',
-              icon: Icons.badge,
-              controller: idController,
-            ),
-            const SizedBox(height: 15),
-            buildInputField(
-              label: 'Acadimic Year',
-              hint: 'Enter Your Acadimic Year',
-              icon: Icons.calendar_today,
-              controller: academicYearController,
-            ),
-            const SizedBox(height: 15),
-            buildInputField(
-              label: 'Phone',
-              hint: 'Enter Your Phone',
-              icon: Icons.phone_iphone,
-              controller: phoneController,
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                final clinic = clinicController.text;
-                final id = idController.text;
-                final academicYear = academicYearController.text;
-                final phone = phoneController.text;
-
-                // التنقل لـ HomeScreen مع تمرير البيانات
-                Navigator.pushNamed(
-                  context,
-                  '/home_stu', // تعديل المسار ليطابق main.dart
-                  arguments: {
-                    'userName': widget.userName,
-                    'userEmail': widget.userEmail,
-                    'clinic': clinic,
-                    'id': id,
-                    'academicYear': academicYear,
-                    'phone': phone,
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF1F5382),
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => ClinicsProvider(),
+      child: Consumer<ClinicsProvider>(
+        builder: (context, provider, child) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Color(0xFF1F5382),
                 ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              child: const Text(
-                'Save & Continue',
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: const Text(
+                'Doctor Clinic',
                 style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
+                  color: Color(0xFF1F5382),
+                  fontSize: 20,
                 ),
               ),
+              centerTitle: true,
             ),
-          ],
-        ),
+            body: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  buildInputField(
+                    label: 'Clinic',
+                    hint: 'Enter Your Clinic',
+                    icon: Icons.local_hospital,
+                    controller: clinicController,
+                  ),
+                  const SizedBox(height: 15),
+                  buildInputField(
+                    label: 'ID',
+                    hint: 'Enter Your ID Number',
+                    icon: Icons.badge,
+                    controller: idController,
+                  ),
+                  const SizedBox(height: 15),
+                  buildInputField(
+                    label: 'Acadimic Year',
+                    hint: 'Enter Your Acadimic Year',
+                    icon: Icons.calendar_today,
+                    controller: academicYearController,
+                  ),
+                  const SizedBox(height: 15),
+                  buildInputField(
+                    label: 'Phone',
+                    hint: 'Enter Your Phone',
+                    icon: Icons.phone_iphone,
+                    controller: phoneController,
+                  ),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: () {
+                      final clinic = clinicController.text;
+                      final id = idController.text;
+                      final academicYear = academicYearController.text;
+                      final phone = phoneController.text;
+                      if(clinic.isEmpty || id.isEmpty || academicYear.isEmpty || phone.isEmpty){
+                        CustomToast.showErrorToast("Please fill all fields");
+                        return;
+                      }
+                      provider.addClinic(
+                    AddClinicData(
+                      allowedYear: academicYear,
+                      clinicName: clinic,
+                      maxStudent: id,
+                      schedule: phone
+                    )
+                      );
+                      Navigator.pop(context);
+                      CustomToast.showSuccessToast("Clinic Added Success");
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1F5382),
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: const Text(
+                      'Save & Continue',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

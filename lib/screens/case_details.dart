@@ -1,7 +1,10 @@
+import 'package:buisness_test/data/doctor/models/all_cases_response.dart';
+import 'package:buisness_test/manager/appointment/appointment_provider.dart';
+import 'package:buisness_test/screens/diagnosis_screen.dart';
 import 'package:flutter/material.dart';
 
 class PatientDetailsScreen extends StatelessWidget {
-  final String patient; //
+  final Case patient; //
 
   const PatientDetailsScreen({super.key, required this.patient});
 
@@ -58,14 +61,15 @@ class PatientDetailsScreen extends StatelessWidget {
                       SizedBox(height: 5),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(color: Colors.black12),
                         ),
                         child: Text(
-                          patient, //
+                          patient.patientName ?? "", //
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -84,14 +88,15 @@ class PatientDetailsScreen extends StatelessWidget {
                       SizedBox(height: 5),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(color: Colors.black12),
                         ),
                         child: Text(
-                          '010260753215',
+                          patient.patPhone ?? "",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -110,14 +115,15 @@ class PatientDetailsScreen extends StatelessWidget {
                       SizedBox(height: 5),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(color: Colors.black12),
                         ),
                         child: Text(
-                          '33',
+                          patient.age.toString() ?? "",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -136,37 +142,38 @@ class PatientDetailsScreen extends StatelessWidget {
                       SizedBox(height: 5),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(color: Colors.black12),
                         ),
                         child: Text(
-                          'Stroke', //
+                          patient.chronicalDiseases ?? "", //
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(color: Colors.black12),
-                        ),
-                        child: Text(
-                          'Diabetes',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
+                      // SizedBox(height: 10),
+                      // Container(
+                      //   width: double.infinity,
+                      //   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.circular(50),
+                      //     border: Border.all(color: Colors.black12),
+                      //   ),
+                      //   child: Text(
+                      //    patient.chronicalDiseases??"",
+                      //     style: TextStyle(
+                      //       color: Colors.black,
+                      //       fontSize: 16,
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(height: 20),
                       //
                       Center(
@@ -185,7 +192,15 @@ class PatientDetailsScreen extends StatelessWidget {
                           width: 150,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DiagnosisTwoScreen(
+                                      provider: AppointmentProvider()),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF1F5382), //
                               shape: RoundedRectangleBorder(
