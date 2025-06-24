@@ -1,26 +1,45 @@
 import 'package:buisness_test/data/doctor/models/productResponse.dart';
+import 'package:buisness_test/manager/doctor/doctor_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'community_store.dart'; // استيراد شاشة CommunityStore
 
-class ContactUSScreen extends StatelessWidget {
+class ContactUSScreen extends StatefulWidget {
   Product? product;
-  final TextEditingController idController =
-      TextEditingController(text: "1000");
-  final TextEditingController nameController =
-      TextEditingController(text: "Merna");
-  final TextEditingController phoneController = TextEditingController();
 
-  // شيلنا 'const' من الـ constructor
-  ContactUSScreen({super.key,  this.product});
+  ContactUSScreen({super.key, this.product});
+
+  @override
+  State<ContactUSScreen> createState() => _ContactUSScreenState();
+}
+
+class _ContactUSScreenState extends State<ContactUSScreen> {
+  DoctorProvider? provider;
+
+  final TextEditingController idController =
+  TextEditingController(text: "1000");
+
+  final TextEditingController nameController =
+  TextEditingController(text: "Merna");
+
+  final TextEditingController phoneController = TextEditingController();
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Provider.of<DoctorProvider>(context, listen: false).getToolsDetails(widget.product!.toolPostID.toString());
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if(product != null){
-      idController.text = product?.price?.toString()??"Free";
-      nameController.text = product!.doctorName.toString();
-      phoneController.text = product!.toolPostID.toString();
+    var provider = Provider.of<DoctorProvider>(context);
+    if (widget.product != null) {
+      idController.text = provider.toolsDetails?.price?.toString() ?? "Free";
+      nameController.text = provider.toolsDetails?.doctorName.toString()??"";
+      phoneController.text = provider.toolsDetails?.doctorPhone.toString()??"";
     }
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,96 +58,102 @@ class ContactUSScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              'Contact US',
-              style: TextStyle(
-                color: Color(0xFF376D9F),
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+      body: Consumer<DoctorProvider>(
+        builder: (context, provider, child) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                const Text(
+                  'Contact US',
+                  style: TextStyle(
+                    color: Color(0xFF376D9F),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF376D9F).withOpacity(0.1),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      buildRow(Icons.attach_money, idController),
+                      const SizedBox(height: 15),
+                      buildRow(Icons.person_outline, nameController),
+                      const SizedBox(height: 15),
+                      buildRow(Icons.smartphone, phoneController),
+                      const SizedBox(height: 15),
+                      GestureDetector(
+                        onTap: () {
+                          if (idController.text.isNotEmpty) {
+                            Clipboard.setData(
+                                ClipboardData(text: idController.text));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Phone number copied!')),
+                            );
+                          }
+                        },
+                        child: Text(
+                          "Press here to copy phone",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (idController.text.isNotEmpty) {
+                            Clipboard.setData(
+                                ClipboardData(text: idController.text));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Phone number copied!')),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(
+                              color: Color(0xFF376D9F), width: 1.5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 12),
+                        ),
+                        child: const Text(
+                          "Copy",
+                          style: TextStyle(
+                            color: Color(0xFF376D9F),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 30),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF376D9F).withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildRow(Icons.attach_money, idController),
-                  const SizedBox(height: 15),
-                  buildRow(Icons.person_outline, nameController),
-                  const SizedBox(height: 15),
-                  buildRow(Icons.smartphone, phoneController),
-                  const SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () {
-                      if (idController.text.isNotEmpty) {
-                        Clipboard.setData(
-                            ClipboardData(text: idController.text));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Phone number copied!')),
-                        );
-                      }
-                    },
-                    child: Text(
-                      "Press here to copy phone",
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (idController.text.isNotEmpty) {
-                        Clipboard.setData(
-                            ClipboardData(text: idController.text));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Phone number copied!')),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      side: const BorderSide(
-                          color: Color(0xFF376D9F), width: 1.5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 12),
-                    ),
-                    child: const Text(
-                      "Copy",
-                      style: TextStyle(
-                        color: Color(0xFF376D9F),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -157,18 +182,18 @@ class ContactUSScreen extends StatelessWidget {
             ),
             decoration: InputDecoration(
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               filled: true,
               fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide:
-                    const BorderSide(color: Color(0xFF376D9F), width: 1.5),
+                const BorderSide(color: Color(0xFF376D9F), width: 1.5),
               ),
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide:
-                    const BorderSide(color: Color(0xFF376D9F), width: 1.5),
+                const BorderSide(color: Color(0xFF376D9F), width: 1.5),
               ),
             ),
           ),

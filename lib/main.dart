@@ -4,13 +4,17 @@ import 'package:buisness_test/screens/diagnose_one.dart';
 import 'package:buisness_test/screens/patient_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/config_provider/config_provider.dart';
 
 var navigationKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var prefs = await SharedPreferences.getInstance();
+  prefs.clear();
   runApp(ChangeNotifierProvider(
       create: (context) => ConfigProvider(), child: MyApp()));
 }

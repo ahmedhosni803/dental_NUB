@@ -5,14 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WelcomeDoctorScreen extends StatefulWidget {
-  final String userName;
-  final String userEmail;
 
-  const WelcomeDoctorScreen({
-    super.key,
-    required this.userName,
-    required this.userEmail,
-  });
+
+  const WelcomeDoctorScreen();
 
   @override
   _WelcomeDoctorScreenState createState() => _WelcomeDoctorScreenState();

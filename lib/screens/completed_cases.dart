@@ -47,7 +47,7 @@ class CompletedCases extends StatelessWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 120),
                       Expanded(
                         child: ListView.builder(
                           itemCount: provider.completed.length,

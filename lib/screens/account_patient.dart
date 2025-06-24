@@ -1,4 +1,8 @@
+import 'package:buisness_test/data/patient/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../core/config_provider/config_provider.dart';
 
 class AccountPatientScreen extends StatefulWidget {
   final String role;
@@ -35,6 +39,8 @@ class _AccountPatientScreenState extends State<AccountPatientScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<ConfigProvider>(context).userModel;
+
     return Scaffold(
       body: Column(
         children: [
@@ -75,7 +81,7 @@ class _AccountPatientScreenState extends State<AccountPatientScreen> {
                     ),
                   ),
                   Text(
-                    _userName,
+                    user?.name ?? '',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -83,7 +89,7 @@ class _AccountPatientScreenState extends State<AccountPatientScreen> {
                     ),
                   ),
                   Text(
-                    _userEmail,
+                    user?.email ?? '',
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
@@ -103,7 +109,7 @@ class _AccountPatientScreenState extends State<AccountPatientScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    _buildPatientInfo(context),
+                    _buildPatientInfo(context,user!),
                     const SizedBox(height: 60), // تعديل المسافة لتكون أكبر
                     _buildButton(
                       context,
@@ -123,12 +129,12 @@ class _AccountPatientScreenState extends State<AccountPatientScreen> {
     );
   }
 
-  Widget _buildPatientInfo(BuildContext context) {
+  Widget _buildPatientInfo(BuildContext context,UserModel user) {
     return Column(
       children: [
-        _infoCard(Icons.person, _userName),
-        _infoCard(Icons.email, _userEmail),
-        if (_phone != null) _infoCard(Icons.phone, _phone!), // جديد: حقل المحمول
+        _infoCard(Icons.person, user.name ?? ""),
+        _infoCard(Icons.email, user.email ?? ""),
+        if (_phone != null) _infoCard(Icons.phone, user.phone??""), // جديد: حقل المحمول
       ],
     );
   }

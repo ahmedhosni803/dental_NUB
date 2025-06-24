@@ -1,4 +1,7 @@
+import 'package:buisness_test/core/config_provider/config_provider.dart';
+import 'package:buisness_test/data/patient/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AccountConsultantScreen extends StatefulWidget {
   final String role;
@@ -13,7 +16,8 @@ class AccountConsultantScreen extends StatefulWidget {
   });
 
   @override
-  State<AccountConsultantScreen> createState() => _AccountConsultantScreenState();
+  State<AccountConsultantScreen> createState() =>
+      _AccountConsultantScreenState();
 }
 
 class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
@@ -31,6 +35,7 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<ConfigProvider>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -60,7 +65,8 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
                   ),
                   const CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('assets/images/account_img.png'),
+                    backgroundImage:
+                        AssetImage('assets/images/account_img.png'),
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -71,7 +77,7 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
                     ),
                   ),
                   Text(
-                    _userName,
+                    user?.userModel?.name ?? "",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -79,7 +85,7 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
                     ),
                   ),
                   Text(
-                    _userEmail,
+                    user?.userModel?.email ?? "",
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
@@ -99,7 +105,7 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    _buildConsultantInfo(context),
+                    _buildConsultantInfo(context, user.userModel!),
                     const SizedBox(height: 20),
                     _buildButton(
                       context,
@@ -119,11 +125,11 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
     );
   }
 
-  Widget _buildConsultantInfo(BuildContext context) {
+  Widget _buildConsultantInfo(BuildContext context, UserModel user) {
     return Column(
       children: [
-        _infoCard(Icons.person, _userName),
-        _infoCard(Icons.email, _userEmail),
+        _infoCard(Icons.person, user.name ?? ""),
+        _infoCard(Icons.email, user.email ?? ""),
       ],
     );
   }
@@ -212,7 +218,8 @@ class _AccountConsultantScreenState extends State<AccountConsultantScreen> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1F5382),

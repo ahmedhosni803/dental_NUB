@@ -8,7 +8,7 @@ class AppointmentData {
   final String nationalId;
   final String gender;
   final int age;
-  final String chronicDisease;
+  final List<String> chronicDisease;
   final int cigarettesPerDay;
   final int brushingFrequency;
   final String complaint;

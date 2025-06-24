@@ -61,9 +61,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case AppRouteName.forgotPassword:
       return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
     case AppRouteName.checkEmail:
-      return MaterialPageRoute(builder: (_) => CheckEmailScreen());
+      return MaterialPageRoute(builder: (_) => CheckEmailScreen(),settings: settings);
     case AppRouteName.resetPassword:
-      return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
+      return MaterialPageRoute(builder: (_) => ResetPasswordScreen(),settings: settings);
     case AppRouteName.passwordSuccess:
       return MaterialPageRoute(builder: (_) => PasswordSuccessScreen());
     case AppRouteName.choosePatient:
@@ -138,7 +138,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case AppRouteName.communityFree:
       return MaterialPageRoute(builder: (_) => CommunityFreeScreen());
       case AppRouteName.otp:
-      return MaterialPageRoute(builder: (_) => OtpScreen());
+      return MaterialPageRoute(builder: (_) => OtpScreen(email: arguments?['email'] ?? '',));
     case AppRouteName.addTools:
       return MaterialPageRoute(
         builder: (_) => AddToolsScreen(

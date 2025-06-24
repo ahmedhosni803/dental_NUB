@@ -35,8 +35,41 @@ class AuthProvider extends ChangeNotifier {
       Navigator.pushNamed(
         navigationKey.currentContext!,
         AppRouteName.otp,
+        arguments: {"email": emailController.text},
       );
       CustomToast.showSuccessToast("Sign Up Success");
+    }, error: (message, statusCode) {
+      Loading.hide();
+    });
+  }
+
+  Future<void> forgetPassword() async {
+    Loading.show();
+    var response = await authApis.forgetPassword(emailController.text);
+    response.when(success: (data) {
+      Loading.hide();
+      Navigator.pushNamed(
+        navigationKey.currentContext!,
+        "/check_email",
+        arguments: {"email": emailController.text, "token": data},
+      );
+      CustomToast.showSuccessToast("OTP Send Successfully");
+    }, error: (message, statusCode) {
+      Loading.hide();
+    });
+  }
+
+  Future<void> otpPassword(String code, String token) async {
+    Loading.show();
+    var response = await authApis.otpPassword(code, token);
+    response.when(success: (data) {
+      Loading.hide();
+      Navigator.pushNamed(
+        navigationKey.currentContext!,
+        "/reset_password",
+        arguments: token,
+      );
+      // CustomToast.showSuccessToast("OTP Send Successfully");
     }, error: (message, statusCode) {
       Loading.hide();
     });
@@ -48,12 +81,39 @@ class AuthProvider extends ChangeNotifier {
     result.when(
       success: (data) {
         Loading.hide();
-        Navigator.pushNamedAndRemoveUntil(
+        Navigator.pushAndRemoveUntil(
           navigationKey.currentState!.context,
-          AppRouteName.login,
+          MaterialPageRoute(
+            builder: (context) => WelcomeDoctorScreen(),
+          ),
           (route) => false,
         );
+        // Navigator.pushNamedAndRemoveUntil(
+        //   navigationKey.currentState!.context,
+        //   AppRouteName.login,
+        //   (route) => false,
+        // );
         CustomToast.showSuccessToast("OTP Success");
+      },
+      error: (message, statusCode) {
+        Loading.hide();
+        CustomToast.showErrorToast(message);
+      },
+    );
+  }
+
+  Future<void> reSendCode(String email) async {
+    Loading.show();
+    var result = await authApis.reSendCode(email);
+    result.when(
+      success: (data) {
+        Loading.hide();
+        // Navigator.pushNamedAndRemoveUntil(
+        //   navigationKey.currentState!.context,
+        //   AppRouteName.login,
+        //   (route) => false,
+        // );
+        CustomToast.showSuccessToast("OTP Send Successfully");
       },
       error: (message, statusCode) {
         Loading.hide();
@@ -100,6 +160,23 @@ class AuthProvider extends ChangeNotifier {
       CustomToast.showSuccessToast("Login Success");
     }, error: (message, statusCode) {
       CustomToast.showErrorToast("Email or Password is incorrect");
+      Loading.hide();
+    });
+  }
+
+  Future<void> resetPassword(String token) async {
+    Loading.show();
+    var response = await authApis.resetPassword(
+        token, passwordController.text, confirmPasswordController.text);
+    response.when(success: (data) {
+      Loading.hide();
+      Navigator.pushNamed(
+        navigationKey.currentContext!,
+        "/password_success",
+        arguments: token,
+      );
+      CustomToast.showSuccessToast("Reset Password Success");
+    }, error: (message, statusCode) {
       Loading.hide();
     });
   }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:buisness_test/core/routes/app_route_name.dart';
 import 'package:buisness_test/data/appointment/models/all_appointments.dart';
 import 'package:buisness_test/manager/appointment/appointment_provider.dart';
@@ -6,7 +8,8 @@ import 'package:flutter/material.dart';
 class DiagnoseOneScreen extends StatefulWidget {
   final AppointmentProvider provider;
   final PatientRecord patient;
-  const DiagnoseOneScreen({super.key ,required this.provider, required this.patient});
+  const DiagnoseOneScreen(
+      {super.key, required this.provider, required this.patient});
 
   @override
   State<DiagnoseOneScreen> createState() => _DiagnoseOneScreenState();
@@ -21,6 +24,7 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
   int timesDay = 2;
   int cigarettesPerDay = 0;
   List<String> patientDisease = ['Liver disease'];
+  List<String> selectedDiseases = [];
   @override
   void initState() {
     gender = widget.patient.gender!;
@@ -29,6 +33,7 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
     timesDay = widget.patient.teethBrushingFrequency!;
     cigarettesPerDay = widget.patient.cigarettesPerDay!;
     patientDisease = widget.patient.chronicalDiseases!;
+    selectedDiseases = getRandomDiseases();
     super.initState();
   }
 
@@ -49,6 +54,26 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
     'Stroke',
     'Radiotherapy',
   ];
+  List<String> getRandomDiseases() {
+    const diseases = [
+      "Heart disease",
+      "Liver disease",
+      "Renal disease",
+      "Rheumatic fever",
+      "Hypertension",
+      "Diabetes",
+      "Stroke",
+      "Radiotherapy",
+    ];
+
+    final random = Random();
+
+    final count = random.nextBool() ? 2 : 3;
+
+    final shuffled = [...diseases]..shuffle(random);
+
+    return shuffled.take(count).toList();
+  }
 
   final Color customBlue = const Color(0xFF1F5382);
 
@@ -80,15 +105,21 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildLabeledTextField('Name',widget.patient.patientName??"",
-                isRequired: true,),
+            _buildLabeledTextField(
+              'Name',
+              widget.patient.patientName ?? "",
+              isRequired: true,
+            ),
             const SizedBox(height: 20),
-            _buildLabeledTextField('Phone', widget.patient.patPhone??"", isRequired: true),
-            const SizedBox(height: 20),
-            _buildLabeledTextField('National ID Number', widget.patient.nationalID??"",
+            _buildLabeledTextField('Phone', widget.patient.patPhone ?? "",
                 isRequired: true),
             const SizedBox(height: 20),
-            _buildLabeledTextField('Age', widget.patient.age.toString(), isRequired: true),
+            _buildLabeledTextField(
+                'National ID Number', widget.patient.nationalID ?? "",
+                isRequired: true),
+            const SizedBox(height: 20),
+            _buildLabeledTextField('Age', widget.patient.age.toString(),
+                isRequired: true),
             const SizedBox(height: 20),
             _buildLabeledTextField('Adress', 'Enter Your Adress'),
             const SizedBox(height: 20),
@@ -151,47 +182,73 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
             _buildTitle('Patient Disease'),
             const SizedBox(height: 8),
             // تعديل جزء Patient Disease
-            patientDisease.contains('Liver disease')
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.medical_services_outlined,
-                          color: customBlue,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'Liver disease',
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                        ),
-                        Checkbox(
-                          value: true, // Liver disease مختار
-                          onChanged: null, // غير تفاعلي
-                          activeColor: customBlue,
-                          checkColor: Colors.white,
-                        ),
-                      ],
+            ...selectedDiseases.map((e) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.medical_services_outlined,
+                      color: customBlue,
+                      size: 20,
                     ),
-                  )
-                : const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: Text(
-                      'No diseases selected',
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        e,
+                        style: const TextStyle(fontSize: 14),
+                      ),
                     ),
-            ),
+                    Checkbox(
+                      value: true, // Liver disease مختار
+                      onChanged: null, // غير تفاعلي
+                      activeColor: customBlue,
+                      checkColor: Colors.white,
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+            // patientDisease.contains('Liver disease')
+            //     ? Padding(
+            //         padding: const EdgeInsets.symmetric(vertical: 4),
+            //         child: Row(
+            //           children: [
+            //             Icon(
+            //               Icons.medical_services_outlined,
+            //               color: customBlue,
+            //               size: 20,
+            //             ),
+            //             const SizedBox(width: 8),
+            //             Expanded(
+            //               child: Text(
+            //                 'Liver disease',
+            //                 style: const TextStyle(fontSize: 14),
+            //               ),
+            //             ),
+            //             Checkbox(
+            //               value: true, // Liver disease مختار
+            //               onChanged: null, // غير تفاعلي
+            //               activeColor: customBlue,
+            //               checkColor: Colors.white,
+            //             ),
+            //           ],
+            //         ),
+            //       )
+            //     : const Padding(
+            //         padding: EdgeInsets.symmetric(vertical: 4),
+            //         child: Text(
+            //           'No diseases selected',
+            //           style: TextStyle(fontSize: 14, color: Colors.grey),
+            //         ),
+            // ),
             const SizedBox(height: 20),
             _buildButton('Diagnose two', customBlue, () {
               Navigator.pushNamed(context, AppRouteName.diagnoseTwo,
-              arguments: {
-                "patient": widget.patient,
-                "provider": widget.provider
-              }
-              );
+                  arguments: {
+                    "patient": widget.patient,
+                    "provider": widget.provider
+                  });
             }),
           ],
         ),
@@ -419,9 +476,11 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
     );
   }
 
-  Widget _buildDropdown(String value,
-      List<String> items,
-      void Function(String?)? onChanged,) {
+  Widget _buildDropdown(
+    String value,
+    List<String> items,
+    void Function(String?)? onChanged,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Column(
@@ -438,10 +497,11 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
               underline: Container(),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               items: items
-                  .map((e) =>
-                  DropdownMenuItem(value: e,
-                      child: Text(e, style: const TextStyle(
-                          color: Colors.black, fontSize: 14))))
+                  .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e,
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 14))))
                   .toList(),
               onChanged: onChanged,
               dropdownColor: Colors.white,

@@ -66,7 +66,7 @@ class AppointmentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> bookAppointment({String? image}) async {
+  Future<void> bookAppointment({String? image,List<String>? chronicDisease }) async {
     Loading.show();
     var data = AppointmentData(
         patientName: fullNameController.text,
@@ -74,7 +74,7 @@ class AppointmentProvider extends ChangeNotifier {
         nationalId: nationalIdController.text,
         gender: gender,
         age: int.parse(ageController.text),
-        chronicDisease: complaint,
+        chronicDisease: chronicDisease??[],
         bookingType: bookingType,
         brushingFrequency: timesBrushing,
         cigarettesPerDay: cigarettesPerDay,

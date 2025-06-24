@@ -2,6 +2,7 @@ import 'package:buisness_test/core/services/api_response.dart';
 import 'package:buisness_test/core/services/base_network.dart';
 import 'package:buisness_test/data/doctor/models/all_cases_response.dart';
 import 'package:buisness_test/data/doctor/models/productResponse.dart';
+import 'package:buisness_test/data/doctor/models/tools_details_response.dart';
 import 'package:dio/dio.dart';
 
 class DoctorApi {
@@ -16,10 +17,12 @@ class DoctorApi {
         return AllCasesResponse.fromJson(json).data ?? [];
       },
     );
-  }  Future<ApiResponse<List<Case>>> getCompleted() async {
+  }
+
+  Future<ApiResponse<List<Case>>> getCompleted() async {
     return ApiResponse.executeApiCall(
       () {
-        return networkService.get("Doctors/CompleteCase");
+        return networkService.get("Doctors/GetCompletedCases");
       },
       (json) {
         return AllCasesResponse.fromJson(json).data ?? [];
@@ -37,6 +40,30 @@ class DoctorApi {
       },
     );
   }
+  Future<ApiResponse<ToolsDetailsResponse>> getToolsDetails(String id) async {
+    return ApiResponse.executeApiCall(
+      () {
+        return networkService.get("Tools/$id");
+      },
+      (json) {
+        return ToolsDetailsResponse.fromJson(json);
+      },
+    );
+  }
+  Future<ApiResponse<bool>> completeCase(String id) async {
+    return ApiResponse.executeApiCall(
+      () {
+        return networkService.post("Doctors/CompleteCase",
+        data: {
+          "caseID": id
+        }
+        );
+      },
+      (json) {
+        return true;
+      },
+    );
+  }
 
   Future<ApiResponse<bool>> addTools(
       {required String name,
@@ -46,13 +73,14 @@ class DoctorApi {
       'Image': await MultipartFile.fromFile(path, filename: ''),
       'ToolName': name,
       'Price': price,
-      'IsFree': 'true'
+      'IsFree': price.isEmpty.toString()
     });
     return ApiResponse.executeApiCall(
       () {
         return networkService.post("Tools", data: data);
       },
       (json) {
+
         return true;
       },
     );

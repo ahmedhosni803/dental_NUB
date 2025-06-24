@@ -18,13 +18,16 @@ class AllCasesResponse {
 class Case {
   Case({
       this.caseID, 
-      this.patientName, 
+      this.appointID,
+      this.patientName,
       this.age, 
       this.patPhone, 
       this.chronicalDiseases,});
 
   Case.fromJson(dynamic json) {
+
     caseID = json['caseID'];
+    appointID = json['appointID'].toString();
     patientName = json['patientName'];
     age = json['age'];
     patPhone = json['patPhone'];
@@ -32,6 +35,7 @@ class Case {
   }
   num? caseID;
   String? patientName;
+  String? appointID;
   num? age;
   String? patPhone;
   String? chronicalDiseases;

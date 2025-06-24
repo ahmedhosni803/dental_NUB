@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:buisness_test/core/config_provider/config_provider.dart';
 import 'package:buisness_test/data/doctor/models/productResponse.dart';
 import 'package:buisness_test/manager/doctor/doctor_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,70 +20,72 @@ class CommunityStore extends StatefulWidget {
 class _CommunityStoreState extends State<CommunityStore> {
   String selectedTab = "All";
 
-  final List<Map<String, String>> products = [
-    {
-      "image": "images/img1.png",
-      "title": "THE PACK - Kids U-Shaped",
-      "price": "EGP170.00",
-      "isNew": "true",
-      "description": "For kids with fun colors and safe brushing.",
-      "brand": "KIDS CARE",
-    },
-    {
-      "image": "images/img2.png",
-      "title": "Hismile Dental Whitening Strips",
-      "price": "EGP3,550.00",
-      "isNew": "true",
-      "description": "Dental Whitening Strips for Sensitive Teeth.",
-      "brand": "HISMILE",
-    },
-    {
-      "image": "images/img3.png",
-      "title": "Smart Clouds Rechargeable H2Ofloss Water",
-      "price": "EGP3,489.00",
-      "isNew": "true",
-      "description": "Rechargeable water flosser for better oral hygiene.",
-      "brand": "Smart Clouds",
-    },
-    {
-      "image": "images/img4.png",
-      "title": "Oral-B Precision Clean Toothbrush",
-      "price": "EGP1,440.00",
-      "isNew": "true",
-      "description": "Effective deep clean toothbrush head.",
-      "brand": "Oral-B",
-    },
-    {
-      "image": "images/img5.png",
-      "title": "Dental Tools Set A",
-      "price": "EGP600.00",
-      "isNew": "false",
-      "description": "Complete dental tools kit A.",
-      "brand": "Dental Co.",
-    },
-    {
-      "image": "images/img6.png",
-      "title": "Dental Tool B",
-      "price": "EGP320.00",
-      "isNew": "false",
-      "description": "Simple and compact dental tool.",
-      "brand": "Dental Co.",
-    },
-  ];
+  // final List<Map<String, String>> products = [
+  //   {
+  //     "image": "images/img1.png",
+  //     "title": "THE PACK - Kids U-Shaped",
+  //     "price": "EGP170.00",
+  //     "isNew": "true",
+  //     "description": "For kids with fun colors and safe brushing.",
+  //     "brand": "KIDS CARE",
+  //   },
+  //   {
+  //     "image": "images/img2.png",
+  //     "title": "Hismile Dental Whitening Strips",
+  //     "price": "EGP3,550.00",
+  //     "isNew": "true",
+  //     "description": "Dental Whitening Strips for Sensitive Teeth.",
+  //     "brand": "HISMILE",
+  //   },
+  //   {
+  //     "image": "images/img3.png",
+  //     "title": "Smart Clouds Rechargeable H2Ofloss Water",
+  //     "price": "EGP3,489.00",
+  //     "isNew": "true",
+  //     "description": "Rechargeable water flosser for better oral hygiene.",
+  //     "brand": "Smart Clouds",
+  //   },
+  //   {
+  //     "image": "images/img4.png",
+  //     "title": "Oral-B Precision Clean Toothbrush",
+  //     "price": "EGP1,440.00",
+  //     "isNew": "true",
+  //     "description": "Effective deep clean toothbrush head.",
+  //     "brand": "Oral-B",
+  //   },
+  //   {
+  //     "image": "images/img5.png",
+  //     "title": "Dental Tools Set A",
+  //     "price": "EGP600.00",
+  //     "isNew": "false",
+  //     "description": "Complete dental tools kit A.",
+  //     "brand": "Dental Co.",
+  //   },
+  //   {
+  //     "image": "images/img6.png",
+  //     "title": "Dental Tool B",
+  //     "price": "EGP320.00",
+  //     "isNew": "false",
+  //     "description": "Simple and compact dental tool.",
+  //     "brand": "Dental Co.",
+  //   },
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) =>
-      DoctorProvider()
-        ..getAllProducts(),
+      create: (BuildContext context) => DoctorProvider()..getAllProducts(),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Consumer<DoctorProvider>(
           builder: (context, provider, child) {
-            List<Product> products = selectedTab == "For Free" ? provider.products.where((element) {
-              return element.isFree == true;
-            },).toList(): provider.products;
+            List<Product> products = selectedTab == "For Free"
+                ? provider.products.where(
+                    (element) {
+                      return element.isFree == true;
+                    },
+                  ).toList()
+                : provider.products;
             return SafeArea(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -105,9 +110,9 @@ class _CommunityStoreState extends State<CommunityStore> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        buildStyledTab("All"),
-                        buildStyledTab("For Free"),
-                        buildStyledTab("Add your tools"),
+                        buildStyledTab("All",provider),
+                        buildStyledTab("For Free",provider),
+                        buildStyledTab("Add your tools",provider),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -115,7 +120,8 @@ class _CommunityStoreState extends State<CommunityStore> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: products.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 16,
@@ -128,7 +134,9 @@ class _CommunityStoreState extends State<CommunityStore> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => ContactUSScreen(product: product),
+                                builder: (_) => ChangeNotifierProvider.value(
+                                    value: provider,
+                                    child: ContactUSScreen(product: product)),
                               ),
                             );
                           },
@@ -163,15 +171,23 @@ class _CommunityStoreState extends State<CommunityStore> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: Image.network(
-                                   "http://dental-nub-app.runasp.net/"+ (product!.imageUrl??""),
+                                    "http://dental-nub-app.runasp.net/${product!.imageUrl ?? ""}",
                                     height: 110,
                                     width: double.infinity,
                                     fit: BoxFit.contain,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.file(
+                                        File(product.imageUrl??""),
+                                        height: 110,
+                                        width: double.infinity,
+                                        fit: BoxFit.contain,
+                                      );
+                                    },
                                   ),
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  product.doctorName!,
+                                  product.doctorName??Provider.of<ConfigProvider>(context,listen: false).userModel?.name??"",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,
@@ -182,7 +198,7 @@ class _CommunityStoreState extends State<CommunityStore> {
                                 ),
                                 const Spacer(),
                                 Text(
-                                  product.price?.toString()??"Free",
+                                  product.price?.toString() ?? "Free",
                                   style: TextStyle(
                                     color: Colors.blue.shade800,
                                     fontWeight: FontWeight.bold,
@@ -206,7 +222,7 @@ class _CommunityStoreState extends State<CommunityStore> {
     );
   }
 
-  Widget buildStyledTab(String label) {
+  Widget buildStyledTab(String label,DoctorProvider provider) {
     bool isSelected = selectedTab == label;
 
     return Padding(
@@ -220,21 +236,18 @@ class _CommunityStoreState extends State<CommunityStore> {
             //   MaterialPageRoute(
             //       builder: (context) => const CommunityFreeScreen()),
             // );
-            setState(() {
-
-            });
+            setState(() {});
           } else if (label == "Add your tools") {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    AddToolsScreen(
-                      onAddProduct: (product) {
-                        setState(() {
-                          products.add(product);
-                        });
-                      },
-                    ),
+                builder: (context) => AddToolsScreen(
+                  onAddProduct: (product) {
+                    setState(() {
+                      provider.products.add(product);
+                    });
+                  },
+                ),
               ),
             );
           } else {

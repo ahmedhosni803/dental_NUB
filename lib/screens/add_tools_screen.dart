@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:buisness_test/data/doctor/models/productResponse.dart';
 import 'package:buisness_test/manager/doctor/doctor_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddToolsScreen extends StatefulWidget {
-  final Function(Map<String, String>) onAddProduct;
+  final Function(Product) onAddProduct;
 
   const AddToolsScreen({super.key, required this.onAddProduct});
 
@@ -31,27 +32,27 @@ class _AddToolsScreenState extends State<AddToolsScreen> {
     }
   }
 
-  void _handleNext() {
-    if (_image != null &&
-        toolNameController.text.isNotEmpty &&
-        priceController.text.isNotEmpty) {
-      widget.onAddProduct({
-        "image": _image!.path,
-        "title": toolNameController.text,
-        "price": priceController.text,
-        "isNew": "false",
-        "description": toolNameController.text,
-        "brand": "User",
-      });
-
-      Navigator.pop(context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("Please fill all fields and upload image")),
-      );
-    }
-  }
+  // void _handleNext() {
+  //   if (_image != null &&
+  //       toolNameController.text.isNotEmpty &&
+  //       priceController.text.isNotEmpty) {
+  //     widget.onAddProduct({
+  //       "image": _image!.path,
+  //       "title": toolNameController.text,
+  //       "price": priceController.text,
+  //       "isNew": "false",
+  //       "description": toolNameController.text,
+  //       "brand": "User",
+  //     });
+  //
+  //     Navigator.pop(context);
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //           content: Text("Please fill all fields and upload image")),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,7 @@ class _AddToolsScreenState extends State<AddToolsScreen> {
                   const SizedBox(height: 12),
                   // إضافة الصورة التوضيحية من Figma
                   Image.asset(
-                    'assets/images/cuate.png',
+                    'assets/images/cuate_2.png',
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.contain,
@@ -133,7 +134,15 @@ class _AddToolsScreenState extends State<AddToolsScreen> {
                   const SizedBox(height: 36),
                   ElevatedButton(
                     onPressed: () {
-                      provider.addProduct(name: toolNameController.text, path: _image?.path??"", price: priceController.text);
+                      widget.onAddProduct(Product(
+                        doctorName: provider.toolsDetails?.doctorName,
+                        isFree: provider.toolsDetails?.isFree,
+                        imageUrl: _image?.path??"",
+                        // image: _image?.path,
+                        price: priceController.text,
+                      ));
+                      Navigator.pop(context);
+                      // provider.addProduct(name: toolNameController.text, path: _image?.path??"", price: priceController.text);
                     },
 
                     style: ElevatedButton.styleFrom(

@@ -51,7 +51,6 @@ class NetworkService {
           return handler.next(error);
         },
       ),
-      if (kDebugMode)
         PrettyDioLogger(
           request: true,
           responseBody: true,

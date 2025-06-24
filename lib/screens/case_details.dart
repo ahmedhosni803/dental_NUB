@@ -197,7 +197,9 @@ class PatientDetailsScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => DiagnosisTwoScreen(
-                                      provider: AppointmentProvider()),
+                                      provider: AppointmentProvider(),
+                                  id: patient.caseID?.toString() ?? "",
+                                  ),
                                 ),
                               );
                             },

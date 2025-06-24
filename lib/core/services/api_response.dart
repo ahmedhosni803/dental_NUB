@@ -4,13 +4,10 @@ import 'package:flutter/foundation.dart';
 sealed class ApiResponse<T> {
   const ApiResponse();
 
-
   const factory ApiResponse.success(T data) = ApiSuccess<T>;
-
 
   const factory ApiResponse.error(String message, {int? statusCode}) =
       ApiError<T>;
-
 
   R when<R>({
     required R Function(T data) success,
@@ -38,7 +35,7 @@ sealed class ApiResponse<T> {
 
       if (response.statusCode! >= 300) {
         return ApiError(
-          response.statusMessage ?? 'Unknown error',
+          response.data["message"] ?? response.statusMessage ?? 'Unknown error',
           statusCode: response.statusCode,
         );
       }

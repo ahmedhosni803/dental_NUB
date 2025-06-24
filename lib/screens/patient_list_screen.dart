@@ -121,6 +121,9 @@ class _MyPatientListScreenState extends State<MyPatientListScreen> {
                           Checkbox(
                             value: isCompleted[index],
                             onChanged: (bool? value) {
+                              if(value == true) {
+                                provider.completeCase(provider.cases[index]);
+                              }
                               setState(() {
                                 isCompleted[index] = value ?? false;
                               });

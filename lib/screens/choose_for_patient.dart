@@ -51,10 +51,10 @@ class ChooseForPatientScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Hi ${provider.userModel?.patientName}!',
+                          'Hi ${provider.userModel?.name}!',
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -68,6 +68,31 @@ class ChooseForPatientScreen extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    Spacer(),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.settings,
+                        size: 28,
+                        color: Color(0xFFFFFFFF),
+
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingsScreen(
+                              role: 'Patient',
+                              userName: userName,
+                              userEmail: userEmail,
+                              academicYear: academicYear,
+                              phone: phone,
+                              clinic: clinic,
+                              id: id,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -260,109 +285,109 @@ class ChooseForPatientScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(0, -2),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              // Home
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: const Color(0xFFFFC107),
-                    child: const Icon(
-                      Icons.home,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Home',
-                    style: TextStyle(
-                      color: Color(0xFF1E5481),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              // Setting
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.settings,
-                      size: 28,
-                      color: Color(0xFF1E5481),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingsScreen(
-                            role: 'Patient',
-                            userName: userName,
-                            userEmail: userEmail,
-                            academicYear: academicYear,
-                            phone: phone,
-                            clinic: clinic,
-                            id: id,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'Setting',
-                    style: TextStyle(
-                      color: Color(0xFF1E5481),
-                    ),
-                  ),
-                ],
-              ),
-              // About Us
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.info,
-                      size: 28,
-                      color: Color(0xFF1E5481),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/about_us');
-                    },
-                  ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    'About Us',
-                    style: TextStyle(
-                      color: Color(0xFF1E5481),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   decoration: const BoxDecoration(
+        //     color: Colors.white,
+        //     borderRadius: BorderRadius.only(
+        //       topLeft: Radius.circular(30),
+        //       topRight: Radius.circular(30),
+        //     ),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: Colors.black12,
+        //         blurRadius: 10,
+        //         offset: Offset(0, -2),
+        //       ),
+        //     ],
+        //   ),
+        //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //     children: [
+        //       // Home
+        //       Column(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           CircleAvatar(
+        //             radius: 20,
+        //             backgroundColor: const Color(0xFFFFC107),
+        //             child: const Icon(
+        //               Icons.home,
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //           const SizedBox(height: 4),
+        //           const Text(
+        //             'Home',
+        //             style: TextStyle(
+        //               color: Color(0xFF1E5481),
+        //               fontWeight: FontWeight.bold,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //       // Setting
+        //       Column(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           IconButton(
+        //             icon: const Icon(
+        //               Icons.settings,
+        //               size: 28,
+        //               color: Color(0xFF1E5481),
+        //             ),
+        //             onPressed: () {
+        //               Navigator.push(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                   builder: (context) => SettingsScreen(
+        //                     role: 'Patient',
+        //                     userName: userName,
+        //                     userEmail: userEmail,
+        //                     academicYear: academicYear,
+        //                     phone: phone,
+        //                     clinic: clinic,
+        //                     id: id,
+        //                   ),
+        //                 ),
+        //               );
+        //             },
+        //           ),
+        //           const SizedBox(height: 4),
+        //           const Text(
+        //             'Setting',
+        //             style: TextStyle(
+        //               color: Color(0xFF1E5481),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //       // About Us
+        //       Column(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           IconButton(
+        //             icon: const Icon(
+        //               Icons.info,
+        //               size: 28,
+        //               color: Color(0xFF1E5481),
+        //             ),
+        //             onPressed: () {
+        //               Navigator.pushNamed(context, '/about_us');
+        //             },
+        //           ),
+        //           const SizedBox(height: 4),
+        //           const Text(
+        //             'About Us',
+        //             style: TextStyle(
+        //               color: Color(0xFF1E5481),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }

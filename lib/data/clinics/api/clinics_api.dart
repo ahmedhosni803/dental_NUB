@@ -4,6 +4,7 @@ import 'package:buisness_test/data/clinics/models/add_clinic_data.dart';
 
 import '../../../core/services/api_response.dart';
 import '../../../core/services/base_network.dart';
+import '../models/case_details.dart';
 
 class ClinicsApi {
   final NetworkService networkService = NetworkService();
@@ -33,12 +34,22 @@ class ClinicsApi {
     );
   }
   Future<ApiResponse<bool>> addClinic(AddClinicData data) async {
-    return ApiResponse.executeApiCall(
+    return ApiResponse.executeApiCall<bool>(
       () {
         return networkService.post("Clinics/AddClinic",data: data.toJson());
       },
       (json) {
         return true;
+      },
+    );
+  }
+  Future<ApiResponse<CaseDetails>> getCaseDetails(String id) async {
+    return ApiResponse.executeApiCall<CaseDetails>(
+      () {
+        return networkService.get("Doctors/Getcasebyid/$id/diagnosis");
+      },
+      (json) {
+        return CaseDetails.fromJson(json);
       },
     );
   }

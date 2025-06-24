@@ -83,6 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               icon: Icons.account_circle,
               title: "Account",
               onTap: () {
+
                 if (widget.role == 'Doctor') {
                   Navigator.push(
                     context,

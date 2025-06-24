@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../manager/auth/auth_provider.dart';
 import 'choose_for_doctor.dart';
 import 'choose_for_patient.dart';
@@ -105,8 +106,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    print(role);
+                                  onPressed: () async{
+                                    // var prefs = await SharedPreferences.getInstance();
+                                    // prefs.clear();
+                                    // print(role);
                                     if (provider.passwordController.text != provider.confirmPasswordController.text) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text("Passwords do not match")),

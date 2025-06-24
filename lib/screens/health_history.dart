@@ -24,14 +24,22 @@ class _HealthHistoryScreenState extends State<HealthHistoryScreen> {
 
   List<String> _getSelectedDiseases() {
     List<String> selectedDiseases = [];
-    if (heartDisease) selectedDiseases.add("Heart disease");
-    if (liverDisease) selectedDiseases.add("Liver disease");
-    if (renalDisease) selectedDiseases.add("Renal disease");
-    if (rheumaticFever) selectedDiseases.add("Rheumatic fever");
-    if (hypertension) selectedDiseases.add("Hypertension");
-    if (diabetes) selectedDiseases.add("Diabetes");
-    if (stroke) selectedDiseases.add("Stroke");
-    if (radiotherapy) selectedDiseases.add("Radiotherapy");
+    // if (heartDisease) selectedDiseases.add("Heart disease");
+    // if (liverDisease) selectedDiseases.add("Liver disease");
+    // if (renalDisease) selectedDiseases.add("Renal disease");
+    // if (rheumaticFever) selectedDiseases.add("Rheumatic fever");
+    // if (hypertension) selectedDiseases.add("Hypertension");
+    // if (diabetes) selectedDiseases.add("Diabetes");
+    // if (stroke) selectedDiseases.add("Stroke");
+    // if (radiotherapy) selectedDiseases.add("Radiotherapy");
+    if (heartDisease) selectedDiseases.add("1");
+    if (liverDisease) selectedDiseases.add("2");
+    if (renalDisease) selectedDiseases.add("3");
+    if (rheumaticFever) selectedDiseases.add("4");
+    if (hypertension) selectedDiseases.add("5");
+    if (diabetes) selectedDiseases.add("6");
+    if (stroke) selectedDiseases.add("7");
+    if (radiotherapy) selectedDiseases.add("8");
     return selectedDiseases;
   }
 
@@ -129,14 +137,14 @@ class _HealthHistoryScreenState extends State<HealthHistoryScreen> {
                   if (_validateData()) {
            
                     List<String> selectedDiseases = _getSelectedDiseases();
-                    String message = "Selected Diseases: ${selectedDiseases.join(", ")}";
+                    // String message = "Selected Diseases: ${selectedDiseases.join(", ")}";
 
                    
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(message)),
-                    );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(content: Text(message)),
+                    // );
 
-                    widget.provider.bookAppointment();
+                    widget.provider.bookAppointment(chronicDisease: selectedDiseases);
                   } else {
                  
                     ScaffoldMessenger.of(context).showSnackBar(

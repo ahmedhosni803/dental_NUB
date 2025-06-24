@@ -8,7 +8,7 @@ class PatientApis {
 
   Future<ApiResponse<UserModel>> getPatient() async {
     return ApiResponse.executeApiCall<UserModel>(
-      () async => networkService.get('User/profile'),
+      () async => networkService.get('Profile/Getprofileinfo'),
       (json) {
         return UserModel.fromJson(json);
       },

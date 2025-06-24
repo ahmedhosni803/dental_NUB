@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../core/config_provider/config_provider.dart';
+import '../data/patient/models/user_model.dart';
 import 'edit.dart';
 
 class AccountDoctorScreen extends StatefulWidget {
@@ -49,6 +52,7 @@ class _AccountDoctorScreenState extends State<AccountDoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var user  = Provider.of<ConfigProvider>(context).userModel;
     return Scaffold(
       body: Column(
         children: [
@@ -90,7 +94,7 @@ class _AccountDoctorScreenState extends State<AccountDoctorScreen> {
                     ),
                   ),
                   Text(
-                    _userName,
+                    user?.name??"",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -98,7 +102,7 @@ class _AccountDoctorScreenState extends State<AccountDoctorScreen> {
                     ),
                   ),
                   Text(
-                    _userEmail,
+                    user?.email??"",
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
@@ -118,7 +122,7 @@ class _AccountDoctorScreenState extends State<AccountDoctorScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 10),
-                    _buildDoctorInfo(context),
+                    _buildDoctorInfo(context,user),
                     const SizedBox(height: 20),
                     _buildButton(
                       context,
@@ -138,15 +142,15 @@ class _AccountDoctorScreenState extends State<AccountDoctorScreen> {
     );
   }
 
-  Widget _buildDoctorInfo(BuildContext context) {
+  Widget _buildDoctorInfo(BuildContext context,UserModel? user) {
     return Column(
       children: [
-        _infoCard(Icons.person, _userName),
-        _infoCard(Icons.badge, _id ?? 'Not provided'),
-        _infoCard(Icons.school, _academicYear ?? 'Not provided'),
-        _infoCard(Icons.email, _userEmail),
-        _infoCard(Icons.phone, _phone ?? 'Not provided'),
-        _infoCard(Icons.local_hospital, _clinic ?? 'Not provided'),
+        _infoCard(Icons.person, user?.name ?? 'Not provided'),
+        _infoCard(Icons.badge, user?.universityID.toString() ?? 'Not provided'),
+        _infoCard(Icons.school, user?.doctorYear?.toString() ?? 'Not provided'),
+        _infoCard(Icons.email, user?.email ?? 'Not provided'),
+        _infoCard(Icons.phone, user?.phone ?? 'Not provided'),
+        _infoCard(Icons.local_hospital, user?.clinicName ?? 'Not provided'),
         const SizedBox(height: 10),
         _buildButton(
           context,
@@ -159,12 +163,12 @@ class _AccountDoctorScreenState extends State<AccountDoctorScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) => EditProfileScreen(
-                  userName: _userName,
-                  userEmail: _userEmail,
-                  academicYear: _academicYear,
-                  phone: _phone,
-                  clinic: _clinic,
-                  id: _id,
+                  userName: user?.name ?? 'Not provided',
+                  userEmail: user?.email ?? 'Not provided',
+                  academicYear: user?.doctorYear?.toString() ?? 'Not provided',
+                  phone: user?.phone ?? 'Not provided',
+                  clinic: user?.clinicName ?? 'Not provided',
+                  id: user?.universityID.toString() ?? 'Not provided',
                 ),
               ),
             );
