@@ -187,7 +187,7 @@ class _CommunityStoreState extends State<CommunityStore> {
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  product.doctorName??Provider.of<ConfigProvider>(context,listen: false).userModel?.name??"",
+                                  product.toolName??Provider.of<ConfigProvider>(context,listen: false).userModel?.name??"",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 13,

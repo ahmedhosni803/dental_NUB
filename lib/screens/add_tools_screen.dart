@@ -137,6 +137,7 @@ class _AddToolsScreenState extends State<AddToolsScreen> {
                       widget.onAddProduct(Product(
                         doctorName: provider.toolsDetails?.doctorName,
                         isFree: provider.toolsDetails?.isFree,
+                        toolName: toolNameController.text,
                         imageUrl: _image?.path??"",
                         // image: _image?.path,
                         price: priceController.text,
