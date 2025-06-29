@@ -88,7 +88,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue),
+                        color: Color(0xFF1F5382)),
                   ),
                   const SizedBox(height: 12),
                   const Text(
@@ -113,7 +113,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: i == 0
-                                      ? Colors.blue
+                                      ? Color(0xFF1F5382)
                                       : Colors.grey.shade300,
                                   width: 2),
                               borderRadius: BorderRadius.circular(8),
@@ -131,7 +131,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   const SizedBox(height: 32),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[800],
+                      backgroundColor: Color(0xFF1F5382),
                       minimumSize: const Size.fromHeight(50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
