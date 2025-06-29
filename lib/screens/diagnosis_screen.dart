@@ -48,7 +48,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
         },),
       child: Scaffold(
         appBar: AppBar(
-          leading: const BackButton(color: Colors.blue),
+          leading: const BackButton(color: Color(0xFF0B4F8A)),
           title: const Text('Diagnose',
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
@@ -70,7 +70,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
                   _buildCurvedTeeth(17, 32, curveUp: false),
                   const SizedBox(height: 30),
                   const Text('Diagnose',
-                      style: TextStyle(fontSize: 16, color: Colors.blue)),
+                      style: TextStyle(fontSize: 16, color: Color(0xFF0B4F8A))),
                   const SizedBox(height: 8),
                   widget.patient == null
                       ? Container(
@@ -105,7 +105,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
                         ),
                   const SizedBox(height: 16),
                   const Text('Assigned Clinic',
-                      style: TextStyle(fontSize: 16, color: Colors.blue)),
+                      style: TextStyle(fontSize: 16, color: Color(0xFF0B4F8A))),
                   const SizedBox(height: 8),
                   widget.patient == null
                       ? Container(
@@ -168,7 +168,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Color(0xFF0B4F8A),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
@@ -246,7 +246,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
                     height: toothSize,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.blue[900] : Colors.white,
+                      color: isSelected ? Color(0xFF0B4F8A) : Colors.white,
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5),
                     ),
