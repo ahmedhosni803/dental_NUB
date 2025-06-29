@@ -37,15 +37,15 @@ class _WelcomeDoctorScreenState extends State<WelcomeDoctorScreen> {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Color(0xFF1F5382),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // leading: IconButton(
+              //   icon: const Icon(
+              //     Icons.arrow_back,
+              //     color: Color(0xFF1F5382),
+              //   ),
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
               backgroundColor: Colors.white,
               elevation: 0,
               title: const Text(

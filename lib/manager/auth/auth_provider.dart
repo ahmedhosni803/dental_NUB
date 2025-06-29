@@ -80,19 +80,24 @@ class AuthProvider extends ChangeNotifier {
     var result = await authApis.otp(code);
     result.when(
       success: (data) {
+        if(data.role?.toLowerCase() == "doctor"){
+          Navigator.pushAndRemoveUntil(
+            navigationKey.currentState!.context,
+            MaterialPageRoute(
+              builder: (context) => WelcomeDoctorScreen(),
+            ),
+                (route) => false,
+          );
+        }else{
+
+          Navigator.pushNamedAndRemoveUntil(
+            navigationKey.currentState!.context,
+            AppRouteName.login,
+            (route) => false,
+          );
+        }
         // Loading.hide();
-        Navigator.pushAndRemoveUntil(
-          navigationKey.currentState!.context,
-          MaterialPageRoute(
-            builder: (context) => WelcomeDoctorScreen(),
-          ),
-          (route) => false,
-        );
-        // Navigator.pushNamedAndRemoveUntil(
-        //   navigationKey.currentState!.context,
-        //   AppRouteName.login,
-        //   (route) => false,
-        // );
+
         CustomToast.showSuccessToast("OTP Success");
       },
       error: (message, statusCode) {
