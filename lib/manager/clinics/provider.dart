@@ -25,7 +25,7 @@ class ClinicsProvider extends ChangeNotifier {
     );
   }
   CaseDetails? caseDetails;
-  Future<void> getCaseDetails(String? id) async {
+  Future<void> getCaseDetails(String? id,Function(CaseDetails data) onUpdate) async {
     if(id == null){
       return;
     }
@@ -33,6 +33,7 @@ class ClinicsProvider extends ChangeNotifier {
     result.when(
       success: (data) {
         caseDetails = data;
+        onUpdate(data);
         notifyListeners();
       },
       error: (message, statusCode) {
@@ -57,6 +58,8 @@ class ClinicsProvider extends ChangeNotifier {
     var result = await api.addClinic(data);
     result.when(
       success: (data) {
+        CustomToast.showSuccessToast("Clinic Added Success");
+
         Navigator.pushNamedAndRemoveUntil(
           navigationKey.currentContext!,
           AppRouteName.homeStu,
@@ -69,7 +72,16 @@ class ClinicsProvider extends ChangeNotifier {
         notifyListeners();
       },
       error: (message, statusCode) {
-        // CustomToast.showErrorToast(message);
+        Navigator.pushNamedAndRemoveUntil(
+          navigationKey.currentContext!,
+          AppRouteName.homeStu,
+          arguments: {
+            "name": "",
+            "role": "Doctor",
+          },
+              (route) => false,
+        );
+        // CustomToast.showErrorToast("something went wrong");
       },
     );
   }

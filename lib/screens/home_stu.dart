@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Hi ${provider.configProvider.userModel?.name}!',
+                                        'Hi ${provider.configProvider.userModel?.name??"Doctor"} !',
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,

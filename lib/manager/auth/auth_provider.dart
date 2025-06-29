@@ -80,7 +80,7 @@ class AuthProvider extends ChangeNotifier {
     var result = await authApis.otp(code);
     result.when(
       success: (data) {
-        Loading.hide();
+        // Loading.hide();
         Navigator.pushAndRemoveUntil(
           navigationKey.currentState!.context,
           MaterialPageRoute(

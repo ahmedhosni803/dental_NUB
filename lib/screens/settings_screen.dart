@@ -68,17 +68,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 });
               },
             ),
-            _buildSettingItem(
-              icon: Icons.dark_mode,
-              title: "Dark Mode",
-              hasSwitch: true,
-              switchValue: isDarkModeEnabled,
-              onChanged: (value) {
-                setState(() {
-                  isDarkModeEnabled = value;
-                });
-              },
-            ),
+            // _buildSettingItem(
+            //   icon: Icons.dark_mode,
+            //   title: "Dark Mode",
+            //   hasSwitch: true,
+            //   switchValue: isDarkModeEnabled,
+            //   onChanged: (value) {
+            //     setState(() {
+            //       isDarkModeEnabled = value;
+            //     });
+            //   },
+            // ),
             _buildSettingItem(
               icon: Icons.account_circle,
               title: "Account",

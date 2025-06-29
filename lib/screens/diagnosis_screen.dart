@@ -42,7 +42,9 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
     return ChangeNotifierProvider(
       create: (_) => ClinicsProvider()
         ..getAllClinic()
-        ..getCaseDetails(widget.id),
+        ..getCaseDetails(widget.id,(data) {
+          selectedToothIds = (data.toothNumbers??[]).toSet();
+        },),
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(color: Colors.blue),
@@ -229,6 +231,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
                 top: dy + (curveUp ? radius : 0),
                 child: GestureDetector(
                   onTap: () {
+                    if(widget.patient != null)return;
                     setState(() {
                       if (selectedToothIds.contains(toothId)) {
                         selectedToothIds.remove(toothId);

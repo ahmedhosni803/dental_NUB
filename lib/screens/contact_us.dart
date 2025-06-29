@@ -37,8 +37,8 @@ class _ContactUSScreenState extends State<ContactUSScreen> {
   Widget build(BuildContext context) {
     var provider = Provider.of<DoctorProvider>(context);
     if (widget.product != null) {
-      idController.text = provider.toolsDetails?.price?.toString() ?? "Free";
-      nameController.text = provider.toolsDetails?.doctorName.toString()??"";
+      idController.text = widget.product!.price?.toString() ?? "Free";
+      nameController.text = widget.product?.doctorName??provider.toolsDetails?.doctorName.toString()??"";
       phoneController.text = provider.toolsDetails?.doctorPhone.toString()??"";
     }
     return Scaffold(
@@ -119,13 +119,14 @@ class _ContactUSScreenState extends State<ContactUSScreen> {
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          if (idController.text.isNotEmpty) {
+                          if (phoneController.text.isNotEmpty) {
                             Clipboard.setData(
-                                ClipboardData(text: idController.text));
+                                ClipboardData(text: phoneController.text));
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Phone number copied!')),
                             );
+
                           }
                         },
                         style: ElevatedButton.styleFrom(

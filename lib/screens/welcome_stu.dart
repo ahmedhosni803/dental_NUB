@@ -107,8 +107,7 @@ class _WelcomeDoctorScreenState extends State<WelcomeDoctorScreen> {
                       schedule: phone
                     )
                       );
-                      Navigator.pop(context);
-                      CustomToast.showSuccessToast("Clinic Added Success");
+                      // Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF1F5382),
