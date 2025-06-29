@@ -121,8 +121,8 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
             _buildLabeledTextField('Age', widget.patient.age.toString(),
                 isRequired: true),
             const SizedBox(height: 20),
-            _buildLabeledTextField('Adress', 'Enter Your Adress'),
-            const SizedBox(height: 20),
+            // _buildLabeledTextField('Adress', 'Enter Your Adress'),
+            // const SizedBox(height: 20),
             _buildTitle('Select your Gender *'),
             Row(
               children: [
@@ -133,10 +133,8 @@ class _DiagnoseOneScreenState extends State<DiagnoseOneScreen> {
             ),
             const SizedBox(height: 20),
             _buildTitle('Choose your complaint'),
-            _buildDropdown(complaint, complaints, (val) {
-              setState(() {
-                complaint = val!;
-              });
+
+            _buildDropdown(widget.patient.complaint??"", [widget.patient.complaint??"",], (val) {
             }),
             const SizedBox(height: 20),
             _buildTitle('Select your Booking *'),

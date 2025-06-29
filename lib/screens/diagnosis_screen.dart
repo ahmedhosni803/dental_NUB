@@ -37,6 +37,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
     'الم في الاسنان',
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -231,7 +232,7 @@ class _DiagnosisTwoScreenState extends State<DiagnosisTwoScreen> {
                 top: dy + (curveUp ? radius : 0),
                 child: GestureDetector(
                   onTap: () {
-                    if(widget.patient != null)return;
+                    if(widget.patient == null)return;
                     setState(() {
                       if (selectedToothIds.contains(toothId)) {
                         selectedToothIds.remove(toothId);
